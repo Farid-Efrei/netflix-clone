@@ -1,0 +1,154 @@
+[gd_scene load_steps=13 format=3 uid="uid://cfjj8l4c7t8yr"]
+
+[ext_resource type="Script" uid="uid://cojosm37tiqpd" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://csnsr61ewf47p" path="res://assets/Background.png" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://d8672x5u3qc7" path="res://scripts/scrolling.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://yjyhoi0ak3ie" path="res://scenes/obstacle.tscn" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://b2rk3a2w6udd2" path="res://scenes/fuel.tscn" id="3_iywne"]
+[ext_resource type="Texture2D" uid="uid://d23ct4meox4ff" path="res://assets/lyxavion.png" id="6_p57ef"]
+[ext_resource type="Script" uid="uid://l3qsbrr1jdss" path="res://scripts/player.gd" id="6_u5sy4"]
+[ext_resource type="Script" uid="uid://lclpvsc4san" path="res://scripts/game_over.gd" id="8_gee14"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u5sy4"]
+radius = 48.1664
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u5sy4"]
+size = Vector2(1603, 33)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u5sy4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gee14"]
+bg_color = Color(0.193063, 0.678597, 7.70092e-07, 1)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_lnu2h")
+obstacle = ExtResource("2_lbhrr")
+fuel = ExtResource("3_iywne")
+
+[node name="Node2D (Background)" type="Node2D" parent="." groups=["DynamicObject"]]
+position = Vector2(0, 480)
+scale = Vector2(2, 2)
+script = ExtResource("1_yqjtg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D (Background)"]
+position = Vector2(400, 0)
+texture = ExtResource("1_uwrxv")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D (Background)"]
+position = Vector2(1200, 0)
+texture = ExtResource("1_uwrxv")
+
+[node name="Timer(SpawnerObstacle)" type="Timer" parent="."]
+autostart = true
+
+[node name="Timer(SpawnerFuel)" type="Timer" parent="."]
+autostart = true
+
+[node name="RigidBody2D(Player)" type="RigidBody2D" parent="." groups=["Player"]]
+position = Vector2(150, 480)
+gravity_scale = 3.0
+continuous_cd = 1
+script = ExtResource("6_u5sy4")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D(Player)"]
+texture = ExtResource("6_p57ef")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D(Player)"]
+shape = SubResource("CircleShape2D_u5sy4")
+
+[node name="StaticBody2D(TopWall)" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D(TopWall)"]
+position = Vector2(791.5, 6.5)
+shape = SubResource("RectangleShape2D_u5sy4")
+
+[node name="StaticBody2D(BottomWall)" type="StaticBody2D" parent="."]
+position = Vector2(0, 960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D(BottomWall)"]
+position = Vector2(791.5, 6.5)
+shape = SubResource("RectangleShape2D_u5sy4")
+
+[node name="Control(UI)" type="Control" parent="."]
+z_index = 10
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="ProgressBar(HealthBar)" type="ProgressBar" parent="Control(UI)"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_u5sy4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gee14")
+value = 50.0
+show_percentage = false
+
+[node name="Label(Score)" type="Label" parent="Control(UI)/ProgressBar(HealthBar)"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "57"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control(GameOver)" type="Control" parent="."]
+visible = false
+z_index = 15
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_gee14")
+
+[node name="ColorRect(Bgd)" type="ColorRect" parent="Control(GameOver)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.0470588, 0.0470588, 0.607843)
+
+[node name="Label" type="Label" parent="Control(GameOver)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Game Over ! 
+Bouhhh !!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button(RestartBtn)" type="Button" parent="Control(GameOver)"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -437.0
+offset_top = 280.0
+offset_right = 320.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(7.70092e-07, 0, 0.577135, 1)
+theme_override_font_sizes/font_size = 100
+text = "Recommencer !"
+
+[connection signal="timeout" from="Timer(SpawnerObstacle)" to="." method="_on_timer_spawner_obstacle_timeout"]
+[connection signal="timeout" from="Timer(SpawnerFuel)" to="." method="_on_timer_spawner_fuel_timeout"]
+[connection signal="pressed" from="Control(GameOver)/Button(RestartBtn)" to="Control(GameOver)" method="_on_button_restart_btn_pressed"]

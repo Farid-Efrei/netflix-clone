@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2rk3a2w6udd2"]
+
+[ext_resource type="Texture2D" uid="uid://dxvetomr3d2qr" path="res://assets/jerican.png" id="1_h2npa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vltxq"]
+radius = 55.4437
+
+[node name="Area2D (Fuel)" type="Area2D" groups=["DynamicObject"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_h2npa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_vltxq")

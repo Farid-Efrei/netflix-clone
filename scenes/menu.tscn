@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp7cqjxrvh0ta"]
+
+[ext_resource type="Script" uid="uid://ca3wbvnbwyern" path="res://scripts/menu.gd" id="1_yqeox"]
+
+[node name="Control(Menu)" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yqeox")
+
+[node name="ColorRect(BackGround)" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.698382, 0.534241, 0.916717, 1)
+
+[node name="Label(Title)" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 166.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 114
+text = "K-Hero-Zen  !!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button(PlayBtn)" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -52.0
+offset_right = 119.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 70
+text = "JOUER "
+
+[connection signal="ready" from="Label(Title)" to="." method="_on_label_title_ready"]
+[connection signal="pressed" from="Button(PlayBtn)" to="." method="_on_button_play_btn_pressed"]
